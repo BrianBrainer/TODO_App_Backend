@@ -9,4 +9,5 @@ public interface UserService extends JpaRepository<UserEntity, Long> {
 //    public User findUserByUsername(@Param("username") String username);
 
     public UserEntity findUserByUsername(String username);
+    public UserEntity findUserByEmail(String email);
 }
