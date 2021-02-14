@@ -1,5 +1,6 @@
 package com.TrainorInc.rest.webservices.restfulwebservices.user;
 
+import com.TrainorInc.rest.webservices.restfulwebservices.EmailService.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping(path="/register" )
     public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity userEntityToRegister){
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         userEntityToRegister.setPassword(encoder.encode(userEntityToRegister.getPassword()));
         userService.save(userEntityToRegister);
+
+        emailService.sendRegistrationEmail(userEntityToRegister.getEmail());
 
         return new ResponseEntity<UserEntity>(userEntityToRegister, HttpStatus.OK);
     }
