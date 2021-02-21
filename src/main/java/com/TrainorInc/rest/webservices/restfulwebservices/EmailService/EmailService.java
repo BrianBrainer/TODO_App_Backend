@@ -1,5 +1,6 @@
 package com.TrainorInc.rest.webservices.restfulwebservices.EmailService;
 
+import com.TrainorInc.rest.webservices.restfulwebservices.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,13 +16,13 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String fromAddress;
 
-    public void sendRegistrationEmail(String toEmailAddress)
+    public void sendRegistrationEmail(String toEmailAddress, UserEntity newUser)
     {
         SimpleMailMessage registrationEmail = new SimpleMailMessage();
         registrationEmail.setFrom(fromAddress);
         registrationEmail.setTo(toEmailAddress);
         registrationEmail.setSubject("Registration");
-        registrationEmail.setText("Thanks for registering!");
+        registrationEmail.setText("Hi " + newUser.getFirstName() +",\n\nThanks for registering!\n\nKind Regards,\nThe TODOPlanner Team");
         javaMailSender.send(registrationEmail);
 
     }

@@ -24,7 +24,7 @@ public class UserController {
         userEntityToRegister.setPassword(encoder.encode(userEntityToRegister.getPassword()));
         userService.save(userEntityToRegister);
 
-        emailService.sendRegistrationEmail(userEntityToRegister.getEmail());
+        emailService.sendRegistrationEmail(userEntityToRegister.getEmail(), userEntityToRegister);
 
         return new ResponseEntity<UserEntity>(userEntityToRegister, HttpStatus.OK);
     }
